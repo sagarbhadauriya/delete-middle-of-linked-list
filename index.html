@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Middle of Linked List</title>
+    <style>
+        body {
+          margin: 0;
+          box-sizing: border-box;
+        }
+    
+        .container {
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          background: linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .1)), url('https://th.bing.com/th/id/OIP.x2QBuXzrZImXynJRwflg2gHaJo?pid=ImgDet&rs=1');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+        .container-wrap {
+          height: 60vh;
+          width: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          background: linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .1)), url('https://images.unsplash.com/photo-1595624871930-6e8537998592?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          border-radius: 50px;
+        }
+    
+        h2 {
+          font-size: 1rem;
+          color: #fff;
+          text-transform: uppercase;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          align-items: center;
+        }
+    
+        p {
+          font-size: 1.5rem;
+          color: #fff;
+          font-weight: 700;
+          margin-bottom: 1rem;
+        }
+    
+        .submit-array {
+          padding: 15px 20px;
+          background: #52caee;
+          font-size: 1rem;
+          text-decoration: none;
+          color: #333333;
+          border-radius: .25rem;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.808)
+        }
+        .submit-array-again {
+          padding: 15px 20px;
+          background: #52caee;
+          font-size: 1rem;
+          text-decoration: none;
+          color: #333333;
+          border-radius: .25rem;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.808)
+        }
+
+        .input-error {
+            color: red;
+        }
+      </style>
+</head>
+<body>
+ 
+    <div class="container">
+        
+        <div class="container-wrap">
+        <h2>Delete Middle Of Linked List</h2>
+        <input class="array-input" id="array-input" placeholder="Enter Nodes of Linked List">
+        <br>
+        <input type="text" id="deleted" value="" placeholder="After Deletion Middle Node">
+        <br>
+        <button class="submit-array" id="submit-array" onclick="out()">Delete</button>
+        <br>
+        <div class="input-error" id="input-error"></div>
+    </div>
+    </div>
+<script>
+        const arrayInput =  (letParse) => {
+           const parse = document.getElementById("array-input").value;
+           let reg = /\d+/g;
+           let result = parse.match(reg);
+           return result;
+        }
+ class Node
+{
+	constructor()
+	{
+		this.data = 0;
+		this.next = null;
+	}
+}
+
+// Deletes middle node and returns
+// head of the modified list
+function deleteMid( head)
+{
+	// Base cases
+	if (head == null)
+		return null;
+	if (head.next == null)
+	{
+		return null;
+	}
+
+	// Initialize slow and fast pointers
+	// to reach middle of linked list
+	var slow_ptr = head;
+	var fast_ptr = head;
+
+	// Find the middle and previous of
+	// middle.
+	var prev = null;
+
+	// To store previous of slow_ptr
+	while (fast_ptr != null &&
+		fast_ptr.next != null)
+	{
+		fast_ptr = fast_ptr.next.next;
+		prev = slow_ptr;
+		slow_ptr = slow_ptr.next;
+	}
+
+	// Delete the middle node
+	prev.next = slow_ptr.next;
+
+	return head;
+}
+
+// A utility function to print
+// a given linked list
+
+function printList(ptr)
+{
+    var arr = [];
+    var i=0;
+	while (ptr != null)
+	{
+        arr[i] = ptr.data;
+        i++;
+		ptr = ptr.next;
+	}
+    var element = arr.map( (e,i) => (e) ).join(' ');
+    document.getElementById("deleted").value = element;
+    
+}
+function newNode(data)
+{
+	temp = new Node();
+	temp.data = data;
+	temp.next = null;
+	return temp;
+}
+
+function out(){
+            document.getElementById("deleted").style.visibility = 'visible';
+            const array = arrayInput(document.getElementById('array-input').value);
+            if(!array){
+                document.getElementById('input-error').innerHTML = 'Incorrect input!';
+                document.getElementById("deleted").style.visibility = 'hidden';
+                return;
+            }
+            document.getElementById("input-error").style.visibility = 'hidden';
+
+            head = newNode(array[0]);
+            head.next = newNode(array[1]);
+            head.next.next = newNode(array[2]);
+            head.next.next.next = newNode(array[3]);
+            head.next.next.next.next = newNode(array[4]);
+
+            printList(head);
+            head = deleteMid(head);
+            printList(head);
+           
+        }
+
+
+
+    </script>
+</body>
+</html>
